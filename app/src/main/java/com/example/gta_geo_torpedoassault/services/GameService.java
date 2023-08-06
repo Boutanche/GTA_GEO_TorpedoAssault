@@ -1,7 +1,12 @@
 package com.example.gta_geo_torpedoassault.services;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.example.gta_geo_torpedoassault.activities.PlayActivity;
+import com.example.gta_geo_torpedoassault.models.BonusItem;
 import com.example.gta_geo_torpedoassault.models.Enemy;
 import com.example.gta_geo_torpedoassault.models.GameObject;
+import com.example.gta_geo_torpedoassault.models.Player;
 import com.example.gta_geo_torpedoassault.models.Torpedo;
 
 import java.util.ArrayList;
@@ -12,15 +17,37 @@ import java.util.List;
  * Elle est appelée par le moteur de jeu à chaque tick.
  */
 public class GameService {
+
     /**
      * Liste des objets du jeu.
      */
     private List<GameObject> gameObjects;
 
     /**
+     * Liste des ennemis du jeu.
+     */
+    private List<Enemy> enemies;
+
+    /**
+     * Liste des torpilles du jeu.
+     */
+    private List<Torpedo> torpedos;
+
+    /**
+     * Liste des bonus du jeu.
+     */
+    private List<BonusItem> bonuses;
+
+    /**
+     * Position du Joueur.
+     */
+    private GameObject player;
+
+    /**
      * Constructeur de la classe.
      */
     public GameService() {
+        player = new Player();
         gameObjects = new ArrayList<>();
     }
 
@@ -74,8 +101,14 @@ public class GameService {
      */
     public void updateGameObjects() {
         // Cette méthode est appelée à chaque tick du jeu pour mettre à jour tous les objets de jeu.
-        updateEnemyPositions();
         // Vous pouvez ajouter d'autres méthodes de mise à jour ici, par exemple pour les torpilles, les bonus, etc.
+        updateEnemyPositions();
+        updatePlayerPosition();
+    }
+
+    private void updatePlayerPosition() {
+        // Mettez à jour la position du joueur en fonction de son azimut et de sa vitesse.
+        moveObject(player, player.getDirection(), player.getSpeed());
     }
 
     /**
@@ -94,5 +127,12 @@ public class GameService {
         // Ici, vous pouvez mettre à jour tous les objets de jeu et vérifier les collisions.
         updateGameObjects();
         checkCollisions();
+    }
+
+    /**
+     * Méthode qui permet de démarrer le jeu.
+     */
+    private void startLocationUpdates() {
+        // Cette méthode est appelée lorsque le jeu démarre.
     }
 }

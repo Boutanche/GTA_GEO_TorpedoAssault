@@ -93,4 +93,15 @@ public class Enemy implements GameObject{
     public String getName() {
         return null;
     }
+
+    /**
+     * Méthode qui permet de positionner un objet en jeu.
+     *
+     * @param latitude  la latitude de l'objet du jeu.
+     * @param longitude la longitude de l'objet du jeu.
+     */
+    @Override
+    public void setPosition(double latitude, double longitude) {
+        // TODO
+    }
 }

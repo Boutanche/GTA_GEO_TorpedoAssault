@@ -76,6 +76,7 @@ public class LocateActivity extends AppCompatActivity implements
         mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
     }
+
     /**
      * Active la couche "Ma position" si la permission a été accordée.
      */
@@ -154,5 +155,4 @@ public class LocateActivity extends AppCompatActivity implements
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
-
 }

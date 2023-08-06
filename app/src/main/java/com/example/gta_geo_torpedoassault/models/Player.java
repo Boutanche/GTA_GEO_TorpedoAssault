@@ -1,8 +1,30 @@
 package com.example.gta_geo_torpedoassault.models;
 
-import com.google.android.gms.maps.model.LatLng;
+import android.location.Location;
 
-public class BonusItem implements GameObject{
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.Task;
+
+/**
+ * Le joueur.
+ */
+public class Player implements GameObject {
+
+    /**
+     * La position du joueur.
+     */
+    private LatLng positionPGS;
+
+    /**
+     * La position x du joueur sur la carte de jeu.
+     */
+    private double latitudeCarte;
+
+    /**
+     * La position y du joueur sur la carte de jeu.
+     */
+    private double longitudeCarte;
+
     /**
      * Méthode qui permet de récupérer la position d'un objet du jeu.
      *
@@ -101,6 +123,15 @@ public class BonusItem implements GameObject{
      */
     @Override
     public void setPosition(double latitude, double longitude) {
-        // TODO
+        this.latitudeCarte = latitude;
+        this.longitudeCarte = longitude;
+    }
+
+    /**
+     * Constructeur de la classe Player.
+     */
+    public Player() {
+        // Centrer le joueur sur la carte
+        setPosition(0, 0);
     }
 }

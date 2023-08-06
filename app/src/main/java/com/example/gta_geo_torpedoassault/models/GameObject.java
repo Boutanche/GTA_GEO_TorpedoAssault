@@ -64,4 +64,10 @@ public interface GameObject {
      */
     String getName();
 
+    /**
+     * Méthode qui permet de positionner un objet en jeu.
+     * @param latitude la latitude de l'objet du jeu.
+     * @param longitude la longitude de l'objet du jeu.
+     */
+    void setPosition(double latitude, double longitude);
 }
