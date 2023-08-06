@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="@string/jouer" />
+
+    <Button
+        android:id="@+id/btnLocate"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="@string/localiser" />
+
+    <Button
+        android:id="@+id/btnScores"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="@string/scores" />
+
+    <Button
+        android:id="@+id/btnInfo"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="@string/informations" />
+
+    <Button
+        android:id="@+id/btnConfig"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="@string/configuration" />
+
+</LinearLayout>

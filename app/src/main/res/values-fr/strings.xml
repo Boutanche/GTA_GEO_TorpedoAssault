@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GTA_GEO_TorpedoAssault</string>
+    <string name="mainactivity">MainActivity</string>
+    <string name="location_permission_denied">Location permission denied</string>
+    <string name="permission_required_toast">Permission required</string>
+    <string name="permission_rationale_location">permission_rationale_location</string>
+    <string name="btnPlay">Play</string>
+    <string name="btnLocate">Locate</string>
+    <string name="btnScores">Scores</string>
+    <string name="btnInfo">Info</string>
+    <string name="btnConfig">Config</string>
+    <string name="mylocation_button_clicked">MyLocation button clicked</string>
+    <string name="current_location">Current location:\n</string>
+    <string name="mainActivity_debug">MainActivity_debug</string>
+    <string name="jouer">Jouer</string>
+    <string name="localiser">Localiser</string>
+    <string name="scores">Scores</string>
+    <string name="informations">Informations</string>
+    <string name="configuration">Configuration</string>
+    <string name="mode_chasse">Mode Chasse</string>
+    <string name="mode_gestion">Mode Gestion</string>
+    <string name="playActivity_debug">DEBUG ACTIVITY PLAY</string>
+    <string name="hunterActivity_debug">DEBUG ACTIVITEE CHASSE</string>
+    <string name="poste_de_tir">Poste de tir</string>
+    <string name="gestion">Gestion</string>
+    <string name="passerelle_d_observation">Passerelle d\'observation</string>
+    <string name="string_poste_de_tir">\@string/poste_de_tir</string>
+    <string name="chasse">Chasse</string>
+    <string name="chambre">Chambre des Torpilles</string>
+    <string name="pilotage">Poste de Pilotage</string>
+    <string name="managerActivity_debug">DEBUG MANAGER ACTIVITY</string>
+    <string name="torpedo_count">Nombre de torpilles :</string>
+    <string name="torpedo_type">Type de torpilles</string>
+    <string name="fire">Feu!</string>
+</resources>
