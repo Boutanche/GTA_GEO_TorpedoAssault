@@ -7,6 +7,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gta_geo_torpedoassault.R;
 
+/**
+ * ## ManagerActivity ##
+ * Activité qui permet de jouer en mode Gestion :
+ * ### Portrait ###
+ * - Chambre des torpilles
+ * -- Permet de choisir la torpille à utiliser
+ * -- Permet de choisir les bonus à activer
+ * ### Paysage ###
+ * - Poste de pilotage
+ * --
+ */
 public class ManagerActivity extends AppCompatActivity {
     Button hunterButton;
     TextView titlePaysage;

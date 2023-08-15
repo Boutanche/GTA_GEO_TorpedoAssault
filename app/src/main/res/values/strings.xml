@@ -41,5 +41,7 @@
     <string name="torpedo_count">Nombre de torpilles :</string>
     <string name="torpedo_type">Type de torpilles</string>
     <string name="fire">Feu!</string>
+    <string name="fire_button">Feu!</string>
+    <string name="fire_button_landscape">Observer</string>
 
 </resources>

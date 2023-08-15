@@ -1,8 +1,5 @@
 package com.example.gta_geo_torpedoassault.services;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.example.gta_geo_torpedoassault.activities.PlayActivity;
 import com.example.gta_geo_torpedoassault.models.BonusItem;
 import com.example.gta_geo_torpedoassault.models.Enemy;
 import com.example.gta_geo_torpedoassault.models.GameObject;
@@ -134,5 +131,15 @@ public class GameService {
      */
     private void startLocationUpdates() {
         // Cette méthode est appelée lorsque le jeu démarre.
+        Enemy enemy = new Enemy();
+        // L'azimuth de l'ennemi est égal à celui du joueur.
+        enemy.setDirection(player.getDirection());
+        // L'ennemi est à 100m devant le joueur.
+        enemy.setDistance(100);
+        // L'ennemi est immobile.
+        enemy.setSpeed(0);
+        // Ajoutez l'ennemi à la liste des objets de jeu.
+        addObject(enemy);
+
     }
 }

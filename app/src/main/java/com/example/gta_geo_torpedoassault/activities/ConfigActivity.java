@@ -1,4 +1,12 @@
 package com.example.gta_geo_torpedoassault.activities;
 
-public class ConfigActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class ConfigActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(android.os.Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(com.example.gta_geo_torpedoassault.R.layout.activity_config);
+    }
 }

@@ -25,7 +25,6 @@
     <string name="poste_de_tir">Poste de tir</string>
     <string name="gestion">Gestion</string>
     <string name="passerelle_d_observation">Passerelle d\'observation</string>
-    <string name="string_poste_de_tir">\@string/poste_de_tir</string>
     <string name="chasse">Chasse</string>
     <string name="chambre">Chambre des Torpilles</string>
     <string name="pilotage">Poste de Pilotage</string>
@@ -33,4 +32,6 @@
     <string name="torpedo_count">Nombre de torpilles :</string>
     <string name="torpedo_type">Type de torpilles</string>
     <string name="fire">Feu!</string>
+    <string name="fire_button">Feu!</string>
+    <string name="fire_button_landscape">Observer</string>
 </resources>
