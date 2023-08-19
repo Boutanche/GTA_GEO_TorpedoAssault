@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -18,23 +19,87 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Queue;
 
+/**
+ * ## HunterActivity ##
+ * Activité qui permet de jouer en mode Chasse :
+ * ### Portrait ###
+ * - Poste de tir
+ * -- Le joueur doit tirer sur les ennemis.
+ * --- Il appuyant sur le button "Tirer".
+ * --- On affiche un pourcentage de réussite : lié à la cible verrouillée.
+ * ### Paysage ###
+ * - Passerelle d'observation
+ * - Le joueur peut collecter des informations sur les ennemis.
+ * -- Type, Vitesse, Direction, Distance
+ * -- Il peut aussi verrouiller une cible.
+ * Un bouton permet de passer en mode Management.
+ */
 public class HunterActivity extends AppCompatActivity {
+
+    /**
+     * Bouton qui passe en mode management.
+     */
     Button managerButton;
+
+    /**
+     * Bouton qui permet de tirer.
+     */
+    Button fireButton;
+
+    /**
+     * Titre de l'activité en mode paysage.
+     */
     TextView titlePaysage;
+
+    /**
+     * Titre de l'activité en mode portrait.
+     */
     TextView titlePortrait;
+
+    /**
+     * Texte qui affiche l'azimut.
+     */
     TextView azimutView;
 
+    /**
+     * SensorManager qui permet de récupérer les valeurs des capteurs.
+     */
     SensorManager mSensorManager;
+
+    /**
+     * Capteur accelerometer.
+     */
     Sensor mAccelerometer;
+
+    /**
+     * Capteur magnetometer.
+     */
     Sensor mMagnetometer;
 
+    /**
+     * Valeur de l'azimut.
+     */
     Float azimut;
+
+    /**
+     * Texte qui affiche une direction.
+     */
     String direction;
 
+    /**
+     * Lissage des valeurs pour la jouabilité.
+     */
     private static final int SMOOTHING_WINDOW_SIZE = 50;
 
+    /**
+     * File qui permet de lisser les valeurs.
+     */
     private final Queue<Float> mSmoothingQueue = new LinkedList<>();
 
+    /**
+     * Lorsque l'activité est créée,
+     * @param savedInstanceState état de l'activité sauvegardée
+     */
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +121,22 @@ public class HunterActivity extends AppCompatActivity {
             android.content.Intent intent = new android.content.Intent(HunterActivity.this, ManagerActivity.class);
             startActivity(intent);
         });
+
+        this.fireButton = findViewById(com.example.gta_geo_torpedoassault.R.id.fire_button);
+        fireButton.setOnClickListener(v -> Log.d(getString(R.string.hunterActivity_debug), "Fire button clicked"));
     }
+
+    /**
+     * SensorEventListener qui permet de récupérer les valeurs des capteurs.
+     */
     private final SensorEventListener mSensorListener = new SensorEventListener() {
+
+        // Valeurs du capteur accelerometer
         float[] mGravity;
+
+        // Valeurs du capteur magnetometer
         float[] mGeomagnetic;
+
         /**
          * Lorsque la précision du capteur change, on ne fait rien
          */
@@ -77,15 +154,15 @@ public class HunterActivity extends AppCompatActivity {
                 mGeomagnetic = event.values;
             if (mGravity != null && mGeomagnetic != null) {
                 // Récupérer l'azimut en radians
-                float[] R = new float[9];
+                float[] radian = new float[9];
                 // Récupérer l'angle d'inclinaison par rapport à l'horizontale
-                float[] I = new float[9];
-                boolean success = SensorManager.getRotationMatrix(R, I, mGravity, mGeomagnetic);
+                float[] inclinaison = new float[9];
+                boolean success = SensorManager.getRotationMatrix(radian, inclinaison, mGravity, mGeomagnetic);
 
                 // Si la matrice de rotation a été calculée avec succès
                 if (success) {
                     float[] orientation = new float[3];
-                    SensorManager.getOrientation(R, orientation);
+                    SensorManager.getOrientation(radian, orientation);
                     // Récupérer l'azimut en degrés
                     azimut = (float)Math.toDegrees(orientation[0]);
 
@@ -100,10 +177,12 @@ public class HunterActivity extends AppCompatActivity {
                     }
                     azimut = sum / mSmoothingQueue.size();
 
-                    DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US); // Use US locale to ensure dot is used as decimal separator
-                    DecimalFormat format = new DecimalFormat("#.##", symbols); // create a DecimalFormat
-                    String formattedAzimut = format.format(azimut); // format the azimut
+                    // Formatage de l'azimut
+                    DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+                    DecimalFormat format = new DecimalFormat("#.##", symbols);
+                    String formattedAzimut = format.format(azimut);
 
+                    // Récupérer la direction
                     if (azimut >= -22.5 && azimut < 22.5) {
                         direction = "Nord";
                     } else if (azimut >= 22.5 && azimut < 67.5) {
@@ -153,15 +232,16 @@ public class HunterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Met en place l'interface utilisateur en mode paysage
+     */
     private void setupLandScapeUI() {
         titlePaysage = findViewById(R.id.textView_title_paysage);
         titlePaysage.setText(R.string.passerelle_d_observation);
-    }
-
-    private void setupPortraitUI() {
-        titlePortrait = findViewById(R.id.textView_title_portrait);
-        titlePortrait.setText(R.string.poste_de_tir);
+        fireButton = findViewById(R.id.fire_button);
+        fireButton.setText(R.string.fire_button_landscape);
         azimutView = findViewById(R.id.azimut_view);
+        azimutView.setText(String.format("Azimut: 0, Direction: Nord"));
         if (azimut != null) {
             DecimalFormat format = new DecimalFormat("#.##"); // create a DecimalFormat
             String formattedAzimut = format.format(azimut); // format the azimut
@@ -171,6 +251,28 @@ public class HunterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Met en place l'interface utilisateur en mode portrait
+     */
+    private void setupPortraitUI() {
+        fireButton = findViewById(R.id.fire_button);
+        fireButton.setText(R.string.fire_button);
+        titlePortrait = findViewById(R.id.textView_title_portrait);
+        titlePortrait.setText(R.string.poste_de_tir);
+        azimutView = findViewById(R.id.azimut_view);
+        azimutView.setText(String.format("Azimut: 0, Direction: Nord"));
+        if (azimut != null) {
+            DecimalFormat format = new DecimalFormat("#.##"); // create a DecimalFormat
+            String formattedAzimut = format.format(azimut); // format the azimut
+            updateAzimutView(formattedAzimut);
+        } else {
+            azimutView.setText(String.format("Azimut: 0, Direction: Nord"));
+        }
+    }
+
+    /**
+     * Lorsque l'activité reprend, on réenregistre les listeners
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -178,9 +280,37 @@ public class HunterActivity extends AppCompatActivity {
         mSensorManager.registerListener(mSensorListener, mMagnetometer, SensorManager.SENSOR_DELAY_UI);
     }
 
+    /**
+     * Lorsque l'activité est mise en pause, on arrête les listeners
+     */
     @Override
     protected void onPause() {
         super.onPause();
         mSensorManager.unregisterListener(mSensorListener);
+    }
+
+    /**
+     * Lorsque l'activité est détruite, on arrête le service de localisation
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // stopService(new Intent(this, LocationService.class));
+    }
+
+    /**
+     * Lorsque l'utilisateur clique sur le bouton "Tirer", on vérifie si le joueur pointe vers une cible
+     * Si oui, on affiche un message de réussite, sinon, on affiche un message d'échec
+     */
+    private boolean isPlayerPointingAtTarget() {
+        // Logique pour déterminer sir le joueur pointe vers une cible
+
+        if (azimut == null) {
+            return false;
+        } else if (azimut >= 0 && azimut < 10) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

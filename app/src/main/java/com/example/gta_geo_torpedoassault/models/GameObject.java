@@ -1,7 +1,5 @@
 package com.example.gta_geo_torpedoassault.models;
 
-import android.icu.text.Transliterator;
-
 import com.google.android.gms.maps.model.LatLng;
 
 /**

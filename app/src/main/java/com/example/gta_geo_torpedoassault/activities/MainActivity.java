@@ -1,11 +1,11 @@
 package com.example.gta_geo_torpedoassault.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gta_geo_torpedoassault.R;
 

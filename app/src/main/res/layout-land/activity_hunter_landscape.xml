@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="MissingDefaultResource">
 
     <TextView
@@ -14,8 +15,46 @@
         android:text="@string/passerelle_d_observation"
         android:textSize="18sp"
         android:padding="16dp" />
+    <TextView
+        android:id="@+id/azimut_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView_title_paysage"
+        android:background="#AAFFFFFF"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_title_paysage" />
+
+    <ImageView
+        android:id="@+id/arrowImageView"
+        android:layout_width="204dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="103dp"
+        android:layout_marginTop="36dp"
+        android:contentDescription="@string/fleche_description"
+        android:rotation="-180"
+        android:src="@mipmap/arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/azimut_view" />
 
     <!-- Other UI elements go here -->
+
+    <Button
+        android:id="@+id/fire_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/manager_button"
+        android:layout_alignBottom="@+id/manager_button"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="543dp"
+        android:layout_marginBottom="0dp"
+        android:layout_toStartOf="@+id/manager_button"
+        android:text="@string/fire_button" />
 
     <Button
         android:id="@+id/manager_button"
@@ -24,5 +63,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:text="@string/gestion" />
+
 
 </RelativeLayout>

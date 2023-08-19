@@ -43,5 +43,6 @@
     <string name="fire">Feu!</string>
     <string name="fire_button">Feu!</string>
     <string name="fire_button_landscape">Observer</string>
+    <string name="fleche_description">Une flêche qui indique où se trouve le haut de l\'appareil.</string>
 
 </resources>

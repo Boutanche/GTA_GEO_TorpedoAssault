@@ -6,10 +6,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.DialogFragment;
-import androidx.appcompat.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.example.gta_geo_torpedoassault.R;
 
