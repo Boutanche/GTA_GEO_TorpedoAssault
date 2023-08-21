@@ -5,14 +5,29 @@ import com.google.android.gms.maps.model.LatLng;
 public class Enemy implements GameObject{
 
     /**
-     * La position en x de l'ennemi.
+     * La position géographique de l'ennemi.
      */
-    private float x;
+    private LatLng positionPGS;
 
     /**
-     * La position en y de l'ennemi.
+     * La latitude de l'ennemi sur la carte de jeu.
      */
-    private float y;
+    private double latitudeCarte;
+
+    /**
+     * La longitude de l'ennemi sur la carte de jeu.
+     */
+    private double longitudeCarte;
+
+    /**
+     * La position x de l'ennemi sur la carte de jeu.
+     */
+    private float xCarte;
+
+    /**
+     * La position y de l'ennemi sur la carte de jeu.
+     */
+    private float yCarte;
 
     /**
      * La distance entre le joueur et l'ennemi.
@@ -36,7 +51,7 @@ public class Enemy implements GameObject{
      */
     @Override
     public LatLng getPosition() {
-        return null;
+        return new LatLng(latitudeCarte, longitudeCarte);
     }
 
     /**
@@ -46,7 +61,8 @@ public class Enemy implements GameObject{
      */
     @Override
     public double getSpeed() {
-        return 0;
+
+        return vitesse;
     }
 
     /**
@@ -56,7 +72,8 @@ public class Enemy implements GameObject{
      */
     @Override
     public float getDirection() {
-        return 0;
+
+        return direction;
     }
 
     /**
@@ -117,41 +134,44 @@ public class Enemy implements GameObject{
      */
     @Override
     public void setPosition(double latitude, double longitude) {
-        this.x = (float) latitude;
-        this.y = (float) longitude;
-        this.distance = 0;
+        this.latitudeCarte = (float) latitude;
+        this.longitudeCarte = (float) longitude;
     }
 
     /**
      * Méthode qui permet de récupérer la position en x de l'ennemi.
      * @return x la position en x de l'ennemi.
      */
-    public float getX() {
-        return x;
+    public float getXCarte() {
+
+        return this.xCarte;
     }
 
     /**
      * Méthode qui permet de donner la position en y de l'ennemi.
-     * @param x la position en x de l'ennemi.
+     * @param xCarte la position en x de l'ennemi.
      */
-    public void setX(float x) {
-        this.x = x;
+    public void setXCarte(float xCarte) {
+
+        this.xCarte = xCarte;
     }
 
     /**
      * Méthode qui permet de récupérer la position en y de l'ennemi.
      * @return la position en y de l'ennemi.
      */
-    public float getY() {
-        return y;
+    public float getYCarte() {
+
+        return this.yCarte;
     }
 
     /**
      * Méthode qui permet de donner la position en y de l'ennemi.
-     * @param y la position en y de l'ennemi.
+     * @param yCarte la position en y de l'ennemi.
      */
-    public void setY(float y) {
-        this.y = y;
+    public void setYCarte(float yCarte) {
+
+        this.yCarte = yCarte;
     }
 
     /**
@@ -161,7 +181,8 @@ public class Enemy implements GameObject{
      */
     @Override
     public double getDistance() {
-        return 0;
+
+        return distance;
     }
 
     /**
@@ -169,9 +190,14 @@ public class Enemy implements GameObject{
      * @param distance la distance entre le joueur et l'ennemi.
      */
     public void setDistance(float distance) {
+
         this.distance = distance;
     }
 
+    /**
+     * Méthode qui permet de récupérer la direction de l'ennemi.
+     * @return la direction de l'ennemi.
+     */
     public void setDirection(float direction) {
         this.direction = direction;
     }

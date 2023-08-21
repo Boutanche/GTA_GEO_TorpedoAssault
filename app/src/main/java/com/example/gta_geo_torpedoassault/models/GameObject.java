@@ -68,4 +68,14 @@ public interface GameObject {
      * @param longitude la longitude de l'objet du jeu.
      */
     void setPosition(double latitude, double longitude);
+
+    void setXCarte(float v);
+
+    void setYCarte(float v);
+
+    void setDirection(float v);
+
+    float getXCarte();
+
+    float getYCarte();
 }

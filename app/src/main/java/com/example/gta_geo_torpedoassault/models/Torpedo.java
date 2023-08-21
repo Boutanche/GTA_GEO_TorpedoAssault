@@ -3,6 +3,9 @@ package com.example.gta_geo_torpedoassault.models;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Torpedo implements GameObject{
+
+    private TorpedoType type;
+
     /**
      * Méthode qui permet de récupérer la position d'un objet du jeu.
      *
@@ -76,11 +79,20 @@ public class Torpedo implements GameObject{
     /**
      * Méthode qui permet de récupérer le type d'un objet du jeu.
      *
-     * @return le type de l'objet du jeu.
+     * @return le type de l'objet du jeu sous forme de chaîne de caractères.
      */
     @Override
     public String getType() {
-        return null;
+        return this.type.toString();
+    }
+
+    /**
+     * Méthode qui permet donner un type à une torpille.
+     * @param type le type de la torpille.
+     *             Les types de torpilles sont définis dans l'énumération TorpedoType.
+     */
+    public void setType(TorpedoType type) {
+        this.type = type;
     }
 
     /**
@@ -102,5 +114,45 @@ public class Torpedo implements GameObject{
     @Override
     public void setPosition(double latitude, double longitude) {
         // TODO
+    }
+
+    /**
+     * @param v
+     */
+    @Override
+    public void setXCarte(float v) {
+
+    }
+
+    /**
+     * @param v
+     */
+    @Override
+    public void setYCarte(float v) {
+
+    }
+
+    /**
+     * @param v
+     */
+    @Override
+    public void setDirection(float v) {
+
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public float getXCarte() {
+        return 0;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public float getYCarte() {
+        return 0;
     }
 }

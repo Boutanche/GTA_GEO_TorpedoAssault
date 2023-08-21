@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gta_geo_torpedoassault.R;
 import com.example.gta_geo_torpedoassault.activities.player_mode.HunterActivity;
 import com.example.gta_geo_torpedoassault.activities.player_mode.ManagerActivity;
+import com.example.gta_geo_torpedoassault.services.GameService;
 
 /**
  * Activité de jeu.
@@ -16,6 +17,7 @@ import com.example.gta_geo_torpedoassault.activities.player_mode.ManagerActivity
 public class PlayActivity extends AppCompatActivity {
 
     private static Activity context;
+    public static GameService gameService;
 
     public static Activity getContext() {
         return context;
@@ -29,6 +31,9 @@ public class PlayActivity extends AppCompatActivity {
         protected void onCreate(android.os.Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_play);
+
+            // Instancier GameService
+            this.gameService = new GameService();
 
             // Les boutons du menu jeu sont déclarés ici
             Button btnHunter = findViewById(R.id.btnHunter);

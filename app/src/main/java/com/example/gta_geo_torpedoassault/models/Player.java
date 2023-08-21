@@ -13,14 +13,25 @@ public class Player implements GameObject {
     private LatLng positionPGS;
 
     /**
-     * La position x du joueur sur la carte de jeu.
+     * La latitude du joueur sur la carte de jeu.
      */
     private double latitudeCarte;
 
     /**
-     * La position y du joueur sur la carte de jeu.
+     * La longitude du joueur sur la carte de jeu.
      */
     private double longitudeCarte;
+
+    /**
+     * La position x du joueur sur la carte de jeu.
+     */
+    private float xCarte;
+
+    /**
+     * La position y du joueur sur la carte de jeu.
+     */
+    private float yCarte;
+
 
     /**
      * Méthode qui permet de récupérer la position d'un objet du jeu.
@@ -30,6 +41,15 @@ public class Player implements GameObject {
     @Override
     public LatLng getPosition() {
         return null;
+    }
+
+    /**
+     * Méthode qui permet de récupérer la position du joueur sur la carte de jeu.
+     *
+     * @return la position du joueur sur la carte de jeu.
+     */
+    public float[] getPositionCarte() {
+        return new float[]{xCarte, yCarte};
     }
 
     /**
@@ -128,7 +148,51 @@ public class Player implements GameObject {
      * Constructeur de la classe Player.
      */
     public Player() {
-        // Centrer le joueur sur la carte
-        setPosition(0, 0);
+    }
+
+    /**
+     * Méthode qui permet de récupérer la position x du joueur sur la carte de jeu.
+     *
+     * @return la latitude du joueur sur la carte de jeu.
+     */
+    public float getXCarte() {
+        return xCarte;
+    }
+
+
+    /**
+     * Méthode qui permet de récupérer la position y du joueur sur la carte de jeu.
+     *
+     * @return la longitude du joueur sur la carte de jeu.
+     */
+
+    public float getYCarte() {
+        return yCarte;
+    }
+
+    /**
+     * Méthode qui permet de donner la position x du joueur sur la carte de jeu.
+     *
+     * @param xCarte la latitude du joueur sur la carte de jeu.
+     */
+    public void setXCarte(float xCarte) {
+        this.xCarte = xCarte;
+    }
+
+    /**
+     * Méthode qui permet de donner la position y du joueur sur la carte de jeu.
+     *
+     * @param yCarte la longitude du joueur sur la carte de jeu.
+     */
+    public void setYCarte(float yCarte) {
+        this.yCarte = yCarte;
+    }
+
+    /**
+     * @param v
+     */
+    @Override
+    public void setDirection(float v) {
+
     }
 }

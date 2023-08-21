@@ -19,6 +19,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Other UI elements go here -->
+    <ListView
+    android:id="@+id/torpedoesListView"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    app:layout_constraintTop_toBottomOf="@id/textView_title_manager_portrait"
+    app:layout_constraintBottom_toTopOf="@id/hunter_button"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
         android:id="@+id/hunter_button"

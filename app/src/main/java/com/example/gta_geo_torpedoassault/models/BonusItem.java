@@ -103,4 +103,44 @@ public class BonusItem implements GameObject{
     public void setPosition(double latitude, double longitude) {
         // TODO
     }
+
+    /**
+     * @param v
+     */
+    @Override
+    public void setXCarte(float v) {
+
+    }
+
+    /**
+     * @param v
+     */
+    @Override
+    public void setYCarte(float v) {
+
+    }
+
+    /**
+     * @param v
+     */
+    @Override
+    public void setDirection(float v) {
+
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public float getXCarte() {
+        return 0;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public float getYCarte() {
+        return 0;
+    }
 }
