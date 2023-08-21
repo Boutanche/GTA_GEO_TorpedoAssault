@@ -83,22 +83,6 @@ public class ManagerActivity extends AppCompatActivity {
     }
 
     /**
-     * Méthode appelée lors de la rotation de l'écran.
-     * @param newConfig Nouvelle configuration.
-     */
-    @Override
-    public void onConfigurationChanged(android.content.res.Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (newConfig.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE) {
-            setContentView(com.example.gta_geo_torpedoassault.R.layout.activity_manager_landscape);
-            setupLandScapeUI();
-        } else {
-            setContentView(com.example.gta_geo_torpedoassault.R.layout.activity_manager_portrait);
-            setupPortraitUI();
-        }
-    }
-
-    /**
      * Méthode qui permet de mettre à jour l'interface en mode paysage.
      */
     private void setupLandScapeUI() {
@@ -130,9 +114,13 @@ public class ManagerActivity extends AppCompatActivity {
         java.util.List<com.example.gta_geo_torpedoassault.models.Torpedo> torpedos = gameService.getRetrievedTorpedos();
         Log.d(getString(R.string.managerActivity_debug), "Torpedoes list size: " + (torpedos != null ? torpedos.size() : "null"));
 
-        if(torpedos != null) {
-            TorpedoAdapter adapter = new TorpedoAdapter(this, torpedos);
-            torpedoesListView.setAdapter(adapter);
+        if (torpedoesListView != null) {
+            if(torpedos != null) {
+                TorpedoAdapter adapter = new TorpedoAdapter(this, torpedos);
+                torpedoesListView.setAdapter(adapter);
+            }
+        } else {
+            Log.e(getString(R.string.managerActivity_debug), "torpedoesListView is null!");
         }
     }
 }
