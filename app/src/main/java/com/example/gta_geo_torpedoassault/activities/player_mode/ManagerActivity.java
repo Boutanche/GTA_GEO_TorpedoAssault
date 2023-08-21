@@ -25,11 +25,31 @@ import com.example.gta_geo_torpedoassault.services.GameService;
  * --
  */
 public class ManagerActivity extends AppCompatActivity {
+
+    /**
+     * Bouton Chasse.
+     */
     Button hunterButton;
+
+    /**
+     * TextView du titre en mode paysage.
+     */
     TextView titlePaysage;
+
+    /**
+     * TextView du titre en mode portrait.
+     */
     TextView titlePortrait;
+
+    /**
+     * Service de jeu.
+     */
     GameService gameService;
 
+    /**
+     * Méthode appelée lors de la création de l'activité.
+     * @param savedInstanceState Etat de l'instance.
+     */
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,18 +72,52 @@ public class ManagerActivity extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * Méthode appelée lors de la reprise de l'activité.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateTorpedoList();
+    }
+
+    /**
+     * Méthode appelée lors de la rotation de l'écran.
+     * @param newConfig Nouvelle configuration.
+     */
+    @Override
+    public void onConfigurationChanged(android.content.res.Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(com.example.gta_geo_torpedoassault.R.layout.activity_manager_landscape);
+            setupLandScapeUI();
+        } else {
+            setContentView(com.example.gta_geo_torpedoassault.R.layout.activity_manager_portrait);
+            setupPortraitUI();
+        }
+    }
+
+    /**
+     * Méthode qui permet de mettre à jour l'interface en mode paysage.
+     */
     private void setupLandScapeUI() {
         titlePaysage = findViewById(R.id.textView_title_manager_paysage);
         titlePaysage.setText(R.string.pilotage);
     }
 
+    /**
+     * Méthode qui permet de mettre à jour l'interface en mode portrait.
+     */
     private void setupPortraitUI() {
         titlePortrait = findViewById(R.id.textView_title_manager_portrait);
         titlePortrait.setText(R.string.chambre);
         updateTorpedoList();
-
     }
 
+    /**
+     * Méthode qui permet de mettre à jour la liste des torpilles.
+     */
     private void updateTorpedoList(){
         // Récupérer la liste des torpilles
         ListView torpedoesListView = findViewById(R.id.torpedoesListView);
