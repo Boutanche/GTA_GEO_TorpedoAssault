@@ -1,10 +1,13 @@
 package com.example.gta_geo_torpedoassault.services;
 
+import static com.example.gta_geo_torpedoassault.activities.PlayActivity.gameService;
+
 import com.example.gta_geo_torpedoassault.models.BonusItem;
 import com.example.gta_geo_torpedoassault.models.Enemy;
 import com.example.gta_geo_torpedoassault.models.GameObject;
 import com.example.gta_geo_torpedoassault.models.Player;
 import com.example.gta_geo_torpedoassault.models.Torpedo;
+import com.example.gta_geo_torpedoassault.models.TorpedoType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +34,29 @@ public class GameService {
     private List<Torpedo> torpedos;
 
     /**
+     * Liste des torpilles dans le sous marin.
+     */
+    private List<Torpedo> retrievedTorpedos;
+
+    /**
+     * Liste des torpilles chargées dans les tubes.
+     */
+    private List<Torpedo> loadedTorpedos;
+
+    /**
      * Liste des bonus du jeu.
      */
     private List<BonusItem> bonuses;
 
     /**
-     * Position du Joueur.
+     * Joueur.
      */
     private GameObject player;
+
+    /**
+     * Nombre de torpilles chargées.
+     */
+    private Integer loadedTorpedosCount;
 
     /**
      * Constructeur de la classe.
@@ -46,6 +64,12 @@ public class GameService {
     public GameService() {
         player = new Player();
         gameObjects = new ArrayList<>();
+        torpedos = new ArrayList<>();
+        retrievedTorpedos = new ArrayList<>();
+        loadedTorpedos = new ArrayList<>();
+        enemies = new ArrayList<>();
+        loadedTorpedosCount = 0;
+        initializeGameObjects();
     }
 
     /**
@@ -129,17 +153,110 @@ public class GameService {
     /**
      * Méthode qui permet de démarrer le jeu.
      */
-    private void startLocationUpdates() {
+    private void firstEnemyInitialize() {
         // Cette méthode est appelée lorsque le jeu démarre.
-        Enemy enemy = new Enemy();
+        Enemy firstEnemy = new Enemy();
         // L'azimuth de l'ennemi est égal à celui du joueur.
-        enemy.setDirection(player.getDirection());
-        // L'ennemi est à 100m devant le joueur.
-        enemy.setDistance(100);
+        firstEnemy.setDirection(player.getDirection());
+        // L'ennemi est à 100m devant le joueur sur la carte.
+        firstEnemy.setXCarte(player.getXCarte());
+        firstEnemy.setYCarte(player.getYCarte()+100);
         // L'ennemi est immobile.
-        enemy.setSpeed(0);
+        firstEnemy.setSpeed(0);
+        // Ajoutez l'ennemi à la liste des ennemis.
+        enemies.add(firstEnemy);
         // Ajoutez l'ennemi à la liste des objets de jeu.
-        addObject(enemy);
+        addObject(firstEnemy);
+    }
+    
+    /**
+     * Méthode qui permet d'initialiser les objets de jeu.
+     */
+    private void initializeGameObjects() {
+        // Ajoutez ici les objets de jeu.
+        // Par exemple, vous pouvez ajouter un ennemi, un bonus, etc.
+        playerInitialize();
+        firstEnemyInitialize();
+        initializeTorpedos();
+    }
 
+    /**
+     * Méthode qui permet d'initialiser les torpilles.
+     */
+    public void initializeTorpedos() {
+        // Ajoutez ici les torpilles.
+        // Par exemple, vous pouvez ajouter une torpille de type BASIC, FAST, SLOW, BIG, SMALL, etc.
+        for (int i = 0; i < 5; i++) {
+            Torpedo basicTorpedo = new Torpedo();
+            basicTorpedo.setType(TorpedoType.BASIC);
+            retrievedTorpedos.add(basicTorpedo);
+            gameObjects.add(basicTorpedo);
+        }
+    }
+
+    /**
+     * Méthode qui permet de récupérer la liste des torpilles.
+     * @return
+     */
+    public List<Torpedo> getRetrievedTorpedos() {
+        return retrievedTorpedos;
+    }
+
+    /**
+     * Méthode pour initialiser le joueur.
+     */
+    private void playerInitialize() {
+        // TODO Utiliser les coordonnées GPS :
+        // Récupérer la latitude et longitude du joueur.
+        player.setPosition(0, 0);
+        // Donner une position au centre de la carte.
+        player.setXCarte(0.0f);
+        player.setYCarte(0.0f);
+        player.setDirection(0.0f);
+        gameObjects.add(player);
+
+    }
+
+    /**
+     * Méthode qui permet de récupérer la liste des objets de jeu.
+     * @return La liste des objets de jeu.
+     */
+    public List<GameObject> getGameObjects() {
+        return gameObjects;
+    }
+
+    /**
+     * Méthode qui permet de charger une torpille.
+     * @param torpedo La torpille à charger.
+     */
+    public void loadTorpedo(Torpedo torpedo) {
+        if (!loadedTorpedos.contains(torpedo) && retrievedTorpedos.contains(torpedo)) {
+            loadedTorpedos.add(torpedo);
+        }
+    }
+
+    /**
+     * Méthode qui permet de savoir si une torpille est chargée.
+     * @param torpedo La torpille à vérifier.
+     * @return true si la torpille est chargée, false sinon.
+     */
+    public boolean isTorpedoLoaded(Torpedo torpedo) {
+        return loadedTorpedos.contains(torpedo);
+    }
+
+    public Integer getLoadedTorpedosCount() {
+        return loadedTorpedosCount;
+    }
+
+    public void incrementLoadedTorpedosCount() {
+        loadedTorpedosCount++;
+    }
+
+    public void decrementLoadedTorpedosCount() {
+        loadedTorpedosCount--;
+    }
+
+    public void resetLoadedTorpedosCount() {
+        loadedTorpedosCount = 0;
     }
 }
