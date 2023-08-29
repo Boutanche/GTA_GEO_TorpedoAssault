@@ -15,6 +15,18 @@ public interface GameObject {
     LatLng getPosition();
 
     /**
+     * Méthode qui permet de récupérer la position x du joueur sur la carte de jeu.
+     * @return la position du joueur sur la carte de jeu.
+     */
+    float getXCarte();
+
+    /**
+     * Méthode qui permet de récupérer la position y du joueur sur la carte de jeu.
+     * @return la position du joueur sur la carte de jeu.
+     */
+    float getYCarte();
+
+    /**
      * Méthode qui permet de récupérer la vitesse d'un objet du jeu.
      * @return la vitesse de l'objet du jeu.
      */
@@ -69,13 +81,22 @@ public interface GameObject {
      */
     void setPosition(double latitude, double longitude);
 
-    void setXCarte(float v);
+    /**
+     * Méthode qui permet de positionner un objet en jeu.
+     * @param xCarte la position x de l'objet du jeu sur la carte.
+     */
+    void setXCarte(float xCarte);
 
-    void setYCarte(float v);
+    /**
+     * Méthode qui permet de positionner un objet en jeu.
+     * @param yCarte la position y de l'objet du jeu sur la carte.
+     */
+    void setYCarte(float yCarte);
 
-    void setDirection(float v);
+    /**
+     * Méthode qui permet de positionner un objet en jeu.
+     * @param azimut la vitesse de l'objet du jeu.
+     */
+    void setDirection(float azimut);
 
-    float getXCarte();
-
-    float getYCarte();
 }

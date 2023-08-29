@@ -1,6 +1,10 @@
 package com.example.gta_geo_torpedoassault.activities;
 
+import static java.lang.System.*;
+
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +13,8 @@ import com.example.gta_geo_torpedoassault.R;
 import com.example.gta_geo_torpedoassault.activities.player_mode.HunterActivity;
 import com.example.gta_geo_torpedoassault.activities.player_mode.ManagerActivity;
 import com.example.gta_geo_torpedoassault.services.GameService;
+
+import java.time.LocalDateTime;
 
 /**
  * Activité de jeu.
@@ -32,8 +38,9 @@ public class PlayActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_play);
 
-            // Instancier GameService
-            this.gameService = new GameService();
+            // Instancier GameService pour pouvoir l'utiliser dans les autres activités
+            // Singleton
+            gameService = GameService.getInstance(getApplicationContext());
 
             // Les boutons du menu jeu sont déclarés ici
             Button btnHunter = findViewById(R.id.btnHunter);

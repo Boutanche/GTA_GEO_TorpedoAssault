@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gta_geo_torpedoassault.R;
+import com.example.gta_geo_torpedoassault.activities.PlayActivity;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -123,7 +124,31 @@ public class HunterActivity extends AppCompatActivity {
         });
 
         this.fireButton = findViewById(com.example.gta_geo_torpedoassault.R.id.fire_button);
-        fireButton.setOnClickListener(v -> Log.d(getString(R.string.hunterActivity_debug), "Fire button clicked"));
+        fireButton.setOnClickListener(v -> {
+            Log.d(getString(R.string.hunterActivity_debug), "Fire button clicked");
+            // Controller le nombre de torpilles chargées
+            if (PlayActivity.gameService.getLoadedTorpedosCount() == 0) {
+                android.widget.Toast.makeText(HunterActivity.this, "Plus de torpilles !", android.widget.Toast.LENGTH_SHORT).show();
+                return;
+            } else if (PlayActivity.gameService.getLoadedTorpedosCount() > 0) {
+                android.widget.Toast.makeText(HunterActivity.this, "Tir !", android.widget.Toast.LENGTH_SHORT).show();
+                PlayActivity.gameService.decrementLoadedTorpedosCount();
+                PlayActivity.gameService.removeFiredTorpedo();
+            } else {
+                android.widget.Toast.makeText(HunterActivity.this, "Erreur !", android.widget.Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (isPlayerPointingAtTarget()) {
+                Log.d(getString(R.string.hunterActivity_debug), "Player is pointing at target");
+                android.widget.Toast.makeText(HunterActivity.this, "Touché !", android.widget.Toast.LENGTH_SHORT).show();
+                PlayActivity.gameService.setScore(100);
+            } else {
+                Log.d(getString(R.string.hunterActivity_debug), "Player is not pointing at target");
+                android.widget.Toast.makeText(HunterActivity.this, "Dans le vide !", android.widget.Toast.LENGTH_SHORT).show();
+                PlayActivity.gameService.setScore(-50);
+            }
+        });
     }
 
     /**

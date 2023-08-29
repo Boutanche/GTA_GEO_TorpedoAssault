@@ -1,11 +1,19 @@
 package com.example.gta_geo_torpedoassault.services;
 
-import static com.example.gta_geo_torpedoassault.activities.PlayActivity.gameService;
 
+import android.app.Activity;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import com.example.gta_geo_torpedoassault.dbHelper.ScoreDbHelper;
 import com.example.gta_geo_torpedoassault.models.BonusItem;
 import com.example.gta_geo_torpedoassault.models.Enemy;
 import com.example.gta_geo_torpedoassault.models.GameObject;
 import com.example.gta_geo_torpedoassault.models.Player;
+import com.example.gta_geo_torpedoassault.contracts.ScoreContract;
 import com.example.gta_geo_torpedoassault.models.Torpedo;
 import com.example.gta_geo_torpedoassault.models.TorpedoType;
 
@@ -18,6 +26,7 @@ import java.util.List;
  */
 public class GameService {
 
+    private static final String TAG = "Game Service Error :";
     /**
      * Liste des objets du jeu.
      */
@@ -59,9 +68,21 @@ public class GameService {
     private Integer loadedTorpedosCount;
 
     /**
+     * Instance de la classe.
+     */
+    private static GameService instance;
+
+    public Integer score;
+    public Long dateTime;
+    private static final String PREFS_NAME = "GTA_GEO_prefFile";
+    private static final String SCORE_KEY = "Score";
+    private static final String DATE_KEY = "Date";
+    private Context context;
+
+    /**
      * Constructeur de la classe.
      */
-    public GameService() {
+    private GameService(Context context) {
         player = new Player();
         gameObjects = new ArrayList<>();
         torpedos = new ArrayList<>();
@@ -69,7 +90,20 @@ public class GameService {
         loadedTorpedos = new ArrayList<>();
         enemies = new ArrayList<>();
         loadedTorpedosCount = 0;
+        score = 0;
+        this.context = context;
         initializeGameObjects();
+    }
+
+    /**
+     * Méthode qui permet de récupérer l'instance de la classe.
+     * @return L'instance de la classe.
+     */
+    public static synchronized GameService getInstance(Context applicationContext) {
+        if (instance == null) {
+            instance = new GameService(applicationContext);
+        }
+        return instance;
     }
 
     /**
@@ -190,8 +224,11 @@ public class GameService {
             Torpedo basicTorpedo = new Torpedo();
             basicTorpedo.setType(TorpedoType.BASIC);
             retrievedTorpedos.add(basicTorpedo);
-            gameObjects.add(basicTorpedo);
+            setScore(1);
         }
+        Torpedo otherTorpedo = new Torpedo();
+        otherTorpedo.setType(TorpedoType.FAST);
+        retrievedTorpedos.add(otherTorpedo);
     }
 
     /**
@@ -244,19 +281,104 @@ public class GameService {
         return loadedTorpedos.contains(torpedo);
     }
 
+    /**
+     * Méthode qui permet de récupérer le nombre de torpilles chargées.
+     * @return Le nombre de torpilles chargées.
+     */
     public Integer getLoadedTorpedosCount() {
         return loadedTorpedosCount;
     }
 
+    /**
+     * Méthode qui permet d'incrémenter le nombre de torpilles chargées.
+     */
     public void incrementLoadedTorpedosCount() {
         loadedTorpedosCount++;
     }
 
+    /**
+     * Méthode qui permet de décrémenter le nombre de torpilles chargées.
+     */
     public void decrementLoadedTorpedosCount() {
         loadedTorpedosCount--;
     }
 
+    /**
+     * Méthode qui permet de retirer la torpille tirée des listes de torpilles.
+     */
+    public void removeFiredTorpedo() {
+        loadedTorpedos.remove(0);
+        retrievedTorpedos.remove(0);
+    }
+
+    /**
+     * Méthode qui permet de réinitialiser le nombre de torpilles chargées.
+     */
     public void resetLoadedTorpedosCount() {
         loadedTorpedosCount = 0;
     }
+
+    /**
+     * Méthode qui permet de récupérer la prochaine torpille chargée.
+     * @return La prochaine torpille chargée.
+     */
+    public Torpedo getNextLoadedTorpedo() {
+        if (!this.loadedTorpedos.isEmpty()) {
+            return loadedTorpedos.get(0);
+        }
+        return null;
+    }
+
+    /**
+     * Méthode pour calculer le score de la partie
+     * @param score int nombre de points à ajouter au score précédent.
+     */
+    public void setScore(int score){
+        this.score += score;
+    }
+
+    /**
+     * Méthode de fin de partie
+     */
+    public void endGame(Activity context) {
+        if (this.context == null) {
+            Log.e(TAG, "endGame: Context is null, cannot end game");
+            return;
+        }
+        int finalScore = getFinalScore();
+
+        // Obtenez une instance de ScoreDbHelper
+        ScoreDbHelper dbHelper = new ScoreDbHelper(this.context);
+
+        // Obtenez une base de données en écriture
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Créez une nouvelle map de valeurs, où les noms de colonnes sont les clés
+        ContentValues values = new ContentValues();
+        values.put(ScoreContract.ScoreEntry.COLUMN_NAME_SCORE, finalScore);
+        values.put(ScoreContract.ScoreEntry.COLUMN_NAME_DATE, System.currentTimeMillis());
+
+        // Insérez la nouvelle ligne, retournant l'ID de la nouvelle ligne
+        long newRowId = db.insert(ScoreContract.ScoreEntry.TABLE_NAME, null, values);
+    }
+
+    /**
+     * Méthode pour enregistrer le score
+     * @param finalScore le score a enregistrer
+     */
+    private void saveScore(int finalScore) {
+        SharedPreferences sharedPreferences = null;
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(SCORE_KEY, finalScore);
+        editor.putLong(DATE_KEY, System.currentTimeMillis());
+    }
+
+    /**
+     * Méthode de calcul du score final.
+     * @return Integer le score final
+     */
+    private int getFinalScore() {
+        return this.score;
+    }
+
 }

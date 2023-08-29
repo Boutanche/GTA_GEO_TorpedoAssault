@@ -5,6 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import android.content.Context;
+
 import com.example.gta_geo_torpedoassault.models.Enemy;
 import com.example.gta_geo_torpedoassault.models.GameObject;
 import com.example.gta_geo_torpedoassault.models.Torpedo;
@@ -12,16 +14,22 @@ import com.example.gta_geo_torpedoassault.services.GameService;
 
 import org.junit.Before;
 import org.junit.Test;
-
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import java.util.List;
 
+@RunWith(RobolectricTestRunner.class)
 public class GameServiceTest {
     private GameService gameService;
+    private Context context;
 
     @Before
     public void setUp() {
-        gameService = new GameService();
+        context = RuntimeEnvironment.systemContext;
+        gameService = GameService.getInstance(context);
     }
+
 
     @Test
     public void testAddObject() {

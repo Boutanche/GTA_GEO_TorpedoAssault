@@ -118,6 +118,11 @@ public class ManagerActivity extends AppCompatActivity {
             if(torpedos != null) {
                 TorpedoAdapter adapter = new TorpedoAdapter(this, torpedos);
                 torpedoesListView.setAdapter(adapter);
+                // S'il n'y a plus de torpilles
+                if (torpedos.isEmpty()){
+                    gameService.endGame(PlayActivity.getContext());
+                    android.widget.Toast.makeText(ManagerActivity.this, "Fin du jeu !", android.widget.Toast.LENGTH_SHORT).show();
+                }
             }
         } else {
             Log.e(getString(R.string.managerActivity_debug), "torpedoesListView is null!");

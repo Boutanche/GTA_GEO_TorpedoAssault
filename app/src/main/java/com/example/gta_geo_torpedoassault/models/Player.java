@@ -32,7 +32,6 @@ public class Player implements GameObject {
      */
     private float yCarte;
 
-
     /**
      * Méthode qui permet de récupérer la position d'un objet du jeu.
      *
@@ -63,12 +62,14 @@ public class Player implements GameObject {
     }
 
     /**
-     * Méthode qui permet de récupérer la direction d'un objet du jeu.
+     * Méthode qui permet de récupérer la direction du joueur :
+     * C'est à dire l'azimut du téléphone.
      *
      * @return la direction de l'objet du jeu.
      */
     @Override
     public float getDirection() {
+
         return 0;
     }
 
