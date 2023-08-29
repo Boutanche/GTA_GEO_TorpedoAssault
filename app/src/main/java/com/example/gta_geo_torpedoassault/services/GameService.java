@@ -26,31 +26,35 @@ import java.util.List;
  */
 public class GameService {
 
+    /**
+     * Tag pour les logs.
+     */
     private static final String TAG = "Game Service Error :";
+
     /**
      * Liste des objets du jeu.
      */
-    private List<GameObject> gameObjects;
+    private final List<GameObject> gameObjects;
 
     /**
      * Liste des ennemis du jeu.
      */
-    private List<Enemy> enemies;
+    private final List<Enemy> enemies;
 
     /**
      * Liste des torpilles du jeu.
      */
-    private List<Torpedo> torpedos;
+    private final List<Torpedo> torpedos;
 
     /**
      * Liste des torpilles dans le sous marin.
      */
-    private List<Torpedo> retrievedTorpedos;
+    private final List<Torpedo> retrievedTorpedos;
 
     /**
      * Liste des torpilles chargées dans les tubes.
      */
-    private List<Torpedo> loadedTorpedos;
+    private final List<Torpedo> loadedTorpedos;
 
     /**
      * Liste des bonus du jeu.
@@ -68,16 +72,39 @@ public class GameService {
     private Integer loadedTorpedosCount;
 
     /**
+     * Score de la partie.
+     */
+    public Integer score;
+
+    /**
+     * Date de la partie.
+     */
+    public Long dateTime;
+
+    /**
+     * Nom du fichier de préférences.
+     */
+    private static final String PREFS_NAME = "GTA_GEO_prefFile";
+
+    /**
+     * Clé pour le score de la partie.
+     */
+    private static final String SCORE_KEY = "Score";
+
+    /**
+     * Clé pour la date de la partie.
+     */
+    private static final String DATE_KEY = "Date";
+
+    /**
+     * Contexte de l'application.
+     */
+    private Context context;
+
+    /**
      * Instance de la classe.
      */
     private static GameService instance;
-
-    public Integer score;
-    public Long dateTime;
-    private static final String PREFS_NAME = "GTA_GEO_prefFile";
-    private static final String SCORE_KEY = "Score";
-    private static final String DATE_KEY = "Date";
-    private Context context;
 
     /**
      * Constructeur de la classe.
@@ -145,7 +172,7 @@ public class GameService {
         // Parcourez la liste des objets de jeu, et pour chaque ennemi, mettez à jour sa position.
         for (GameObject gameObject : gameObjects) {
             if (gameObject instanceof Enemy) {
-                // Mettez à jour la position de l'ennemi en fonction de son azimut et de sa vitesse.
+                // Mettez à jour la position de l'ennemi en fonction de son azimuth et de sa vitesse.
                 moveObject(gameObject, gameObject.getDirection(), gameObject.getSpeed());
             }
         }
@@ -162,7 +189,7 @@ public class GameService {
     }
 
     private void updatePlayerPosition() {
-        // Mettez à jour la position du joueur en fonction de son azimut et de sa vitesse.
+        // Mettez à jour la position du joueur en fonction de son azimuth et de sa vitesse.
         moveObject(player, player.getDirection(), player.getSpeed());
     }
 
