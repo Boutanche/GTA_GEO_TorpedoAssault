@@ -1,6 +1,5 @@
 package com.example.gta_geo_torpedoassault.services;
 
-
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
@@ -188,6 +187,9 @@ public class GameService {
         updatePlayerPosition();
     }
 
+    /**
+     * Méthode qui permet de faire la mise à jour de la position du joueur.
+     */
     private void updatePlayerPosition() {
         // Mettez à jour la position du joueur en fonction de son azimuth et de sa vitesse.
         moveObject(player, player.getDirection(), player.getSpeed());
@@ -260,7 +262,7 @@ public class GameService {
 
     /**
      * Méthode qui permet de récupérer la liste des torpilles.
-     * @return
+     * @return La liste des torpilles.
      */
     public List<Torpedo> getRetrievedTorpedos() {
         return retrievedTorpedos;
