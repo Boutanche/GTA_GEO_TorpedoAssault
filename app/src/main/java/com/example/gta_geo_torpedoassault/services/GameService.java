@@ -380,7 +380,7 @@ public class GameService {
         // Obtenez une base de données en écriture
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        // Créez une nouvelle map de valeurs, où les noms de colonnes sont les clés
+        // Créez une nouvelle map de valeurs, où les noms des colonnes sont les clés
         ContentValues values = new ContentValues();
         values.put(ScoreContract.ScoreEntry.COLUMN_NAME_SCORE, finalScore);
         values.put(ScoreContract.ScoreEntry.COLUMN_NAME_DATE, System.currentTimeMillis());
